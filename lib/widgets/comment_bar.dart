@@ -1,8 +1,16 @@
-import 'package:fluentui_system_icons/fluentui_system_icons.dart';
+import 'package:assignment/widgets/dialog_box.dart';
 import 'package:flutter/material.dart';
 
 class CommentBar extends StatelessWidget {
-  const CommentBar({super.key});
+  final String imgURL;
+  final String comment;
+  final IconData? trailingIcon;
+  const CommentBar({
+    super.key,
+    required this.imgURL,
+    required this.comment,
+    required this.trailingIcon,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -16,16 +24,29 @@ class CommentBar extends StatelessWidget {
           border: Border.all(color: Colors.black26),
           borderRadius: const BorderRadius.all(Radius.circular(18)),
         ),
-        child: const Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            CircleAvatar(
-              backgroundImage:
-                  NetworkImage("https://via.placeholder.com/150/92c952"),
-            ),
-            Text("This is the first"),
-            Icon(FluentIcons.add_24_filled)
-          ],
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              CircleAvatar(
+                backgroundImage: NetworkImage(imgURL),
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              Flexible(child: Text(comment)),
+              const SizedBox(
+                width: 10,
+              ),
+              InkWell(
+                child: Icon(trailingIcon),
+                onTap: () {
+                  dialogBuilder(context);
+                },
+              )
+            ],
+          ),
         ),
       ),
     );
