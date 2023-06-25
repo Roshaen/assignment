@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class AddData {
   final String comment;
   final Function updateUI;
+
   AddData(this.comment, this.updateUI);
 
   List<String> newComment = [];

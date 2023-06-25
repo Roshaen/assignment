@@ -35,7 +35,25 @@ class _AddCommentState extends State<AddComment> {
     setState(() {
       commentData = localData;
     });
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
   }
+
+  final snackBar = const SnackBar(
+    content: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          'New comment was added!',
+          style: TextStyle(color: Colors.black),
+        ),
+        Icon(Icons.check_circle_outline_outlined)
+      ],
+    ),
+    backgroundColor: Color.fromARGB(255, 226, 227, 247),
+    shape: StadiumBorder(),
+  );
 
   void getAllData() async {
     final FetchData fd = FetchData();

@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class FetchData {
   List commentData = [];
   List<String> localData = [];
+  List initialData = [];
   Future getData() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     try {
@@ -13,10 +14,12 @@ class FetchData {
       if (response.statusCode == 200) {
         commentData = json.decode(response.body).toList();
         for (int i = 0; i < 3; i++) {
+          initialData.add(commentData[i]);
           var a = json.encode(commentData[i]);
           localData.add(a);
         }
         await prefs.setStringList('items', localData);
+        return initialData;
       } else {
         return;
       }
