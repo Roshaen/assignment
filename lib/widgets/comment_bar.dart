@@ -5,11 +5,14 @@ class CommentBar extends StatelessWidget {
   final String imgURL;
   final String comment;
   final IconData? trailingIcon;
+  final Function updateUI;
+
   const CommentBar({
     super.key,
     required this.imgURL,
     required this.comment,
     required this.trailingIcon,
+    required this.updateUI,
   });
 
   @override
@@ -42,7 +45,7 @@ class CommentBar extends StatelessWidget {
               InkWell(
                 child: Icon(trailingIcon),
                 onTap: () {
-                  dialogBuilder(context);
+                  dialogBuilder(context, updateUI);
                 },
               )
             ],

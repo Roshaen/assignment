@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:assignment/utils/fetch_data.dart';
 import 'package:assignment/widgets/card_header.dart';
 import 'package:assignment/widgets/comment_bar.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../widgets/search_bar.dart';
 
@@ -15,10 +18,23 @@ class AddComment extends StatefulWidget {
 
 class _AddCommentState extends State<AddComment> {
   List commentData = [];
+
   @override
   void initState() {
     super.initState();
     getAllData();
+  }
+
+  void updateUI() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final List<String>? items = prefs.getStringList('items');
+    List localData = [];
+    for (int i = 0; i < items!.length; i++) {
+      localData.add(json.decode(items[i]));
+    }
+    setState(() {
+      commentData = localData;
+    });
   }
 
   void getAllData() async {
@@ -45,7 +61,10 @@ class _AddCommentState extends State<AddComment> {
                   return CommentBar(
                     imgURL: data['thumbnailUrl'],
                     comment: data['title'],
-                    trailingIcon: FluentIcons.add_24_filled,
+                    trailingIcon: (data['id'] == commentData.length)
+                        ? FluentIcons.add_24_filled
+                        : FluentIcons.checkmark_24_filled,
+                    updateUI: updateUI,
                   );
                 }).toList(),
               ),
