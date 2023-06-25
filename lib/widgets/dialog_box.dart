@@ -1,7 +1,7 @@
 import 'package:assignment/utils/add_data.dart';
 import 'package:flutter/material.dart';
 
-Future<void> dialogBuilder(BuildContext context, Function updateUI) {
+Future<void> dialogBuilder(BuildContext context, Function updateUI, int id) {
   final comment = TextEditingController();
   return showDialog<void>(
     context: context,
@@ -52,7 +52,7 @@ Future<void> dialogBuilder(BuildContext context, Function updateUI) {
               ),
               ElevatedButton(
                 onPressed: () {
-                  final AddData ad = AddData(comment.text, updateUI);
+                  final AddData ad = AddData(comment.text, updateUI, id);
                   ad.addData();
                   Navigator.pop(context);
                 },

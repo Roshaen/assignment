@@ -5,8 +5,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 class AddData {
   final String comment;
   final Function updateUI;
+  final int id;
 
-  AddData(this.comment, this.updateUI);
+  AddData(this.comment, this.updateUI, this.id);
 
   List<String> newComment = [];
   Future addData() async {
@@ -17,6 +18,7 @@ class AddData {
       },
       body: jsonEncode(<String, String>{
         'id': "1",
+        "userId": id.toString(),
         "title": comment,
         "thumbnailUrl":
             "https://www.google.com/s2/favicons?sz=64&domain_url=yahoo.com"
@@ -24,7 +26,6 @@ class AddData {
     );
 
     if (response.statusCode == 201) {
-      // newComment.add(json.decode(response.body));
       var a = json.decode(response.body);
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       newComment = prefs.getStringList('items')!;

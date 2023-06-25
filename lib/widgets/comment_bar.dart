@@ -5,7 +5,9 @@ class CommentBar extends StatelessWidget {
   final String imgURL;
   final String comment;
   final IconData? trailingIcon;
+  final int id;
   final Function updateUI;
+  final bool isLast;
 
   const CommentBar({
     super.key,
@@ -13,6 +15,8 @@ class CommentBar extends StatelessWidget {
     required this.comment,
     required this.trailingIcon,
     required this.updateUI,
+    required this.id,
+    required this.isLast,
   });
 
   @override
@@ -42,12 +46,14 @@ class CommentBar extends StatelessWidget {
               const SizedBox(
                 width: 10,
               ),
-              InkWell(
-                child: Icon(trailingIcon),
-                onTap: () {
-                  dialogBuilder(context, updateUI);
-                },
-              )
+              (isLast)
+                  ? InkWell(
+                      child: Icon(trailingIcon),
+                      onTap: () {
+                        dialogBuilder(context, updateUI, id);
+                      },
+                    )
+                  : Icon(trailingIcon),
             ],
           ),
         ),

@@ -18,6 +18,7 @@ class AddComment extends StatefulWidget {
 
 class _AddCommentState extends State<AddComment> {
   List commentData = [];
+  int id = 4;
 
   @override
   void initState() {
@@ -34,7 +35,9 @@ class _AddCommentState extends State<AddComment> {
     }
     setState(() {
       commentData = localData;
+      id++;
     });
+
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
@@ -79,10 +82,17 @@ class _AddCommentState extends State<AddComment> {
                   return CommentBar(
                     imgURL: data['thumbnailUrl'],
                     comment: data['title'],
-                    trailingIcon: (data['id'] == commentData.length)
-                        ? FluentIcons.add_24_filled
-                        : FluentIcons.checkmark_24_filled,
+                    trailingIcon:
+                        (data['userId'] == commentData.length.toString() ||
+                                data['id'] == commentData.length)
+                            ? FluentIcons.add_24_filled
+                            : FluentIcons.checkmark_24_filled,
                     updateUI: updateUI,
+                    id: id,
+                    isLast: (data['userId'] == commentData.length.toString() ||
+                            data['id'] == commentData.length)
+                        ? true
+                        : false,
                   );
                 }).toList(),
               ),
